@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "234164038659",
+    "firebase_url": "https://scheapp-4-0-ccbba.firebaseio.com",
+    "project_id": "scheapp-4-0-ccbba",
+    "storage_bucket": "scheapp-4-0-ccbba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234164038659:android:8c96df2e7aa4d6cf107236",
+        "android_client_info": {
+          "package_name": "com.dastan.scheapp4_0"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234164038659-3316c9ko1qpcocqo94l10hd2a66l9fli.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXjknGiXuWjCBXDjVmoFtSlBempt3ObJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234164038659-3316c9ko1qpcocqo94l10hd2a66l9fli.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navMonday">
+
+    <fragment
+        android:id="@+id/navMonday"
+        android:name="com.dastan.scheapp4_0.ui.monday.MondayFragment"
+        android:label="@string/menuMonday"
+        tools:layout="@layout/fragment_monday">
+
+<!--        <action-->
+<!--            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"-->
+<!--            app:destination="@id/nav_home_second" />-->
+    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/nav_home_second"-->
+<!--        android:name="com.dastan.scheapp4_0.ui.home.HomeSecondFragment"-->
+<!--        android:label="@string/menuMonday"-->
+<!--        tools:layout="@layout/fragment_home_second">-->
+<!--        <action-->
+<!--            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"-->
+<!--            app:destination="@id/navMonday" />-->
+
+<!--        <argument-->
+<!--            android:name="myArg"-->
+<!--            app:argType="string" />-->
+<!--    </fragment>-->
+
+    <fragment
+        android:id="@+id/navTuesday"
+        android:name="com.dastan.scheapp4_0.ui.tuesday.TuesdayFragment"
+        android:label="@string/menuTuesday"
+        tools:layout="@layout/fragment_tuesday" />
+
+    <fragment
+        android:id="@+id/navWednesday"
+        android:name="com.dastan.scheapp4_0.ui.wednesday.WednesdayFragment"
+        android:label="@string/menuWednesday"
+        tools:layout="@layout/fragment_wednesday" />
+
+    <fragment
+        android:id="@+id/navThursday"
+        android:name="com.dastan.scheapp4_0.ui.thursday.ThursdayFragment"
+        android:label="@string/menuThursday"
+        tools:layout="@layout/fragment_thursday" />
+
+    <fragment
+        android:id="@+id/navFriday"
+        android:name="com.dastan.scheapp4_0.ui.friday.FridayFragment"
+        android:label="@string/menuFriday"
+        tools:layout="@layout/fragment_friday" />
+
+    <fragment
+        android:id="@+id/navSaturday"
+        android:name="com.dastan.scheapp4_0.ui.saturday.SaturdayFragment"
+        android:label="@string/menuSaturday"
+        tools:layout="@layout/fragment_saturday" />
+</navigation>

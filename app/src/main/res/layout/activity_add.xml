@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"
+                android:text="@string/default_time_text"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"
+                android:text="@string/default_lesson_teacher_text"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_16"
+                android:text="@string/default_type_text"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="@dimen/padding_16"
+                android:text="@string/default_room_text"
+                android:textColor="@color/colorWhite" />
+
+        </GridLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <GridLayout
+        android:id="@+id/editContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/etTimeMon"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_16"
+            android:textSize="16sp"
+            android:hint="@string/default_time_hint"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/etLessonMon"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_16"
+            android:textSize="16sp"
+            android:hint="@string/default_lesson_teacher_hint"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/etTypeMon"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_16"
+            android:textSize="16sp"
+            android:hint="@string/default_type_hint"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/etRoomMon"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="@dimen/padding_16"
+            android:hint="@string/default_room_hint"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack" />
+
+    </GridLayout>
+
+    <ProgressBar
+        android:id="@+id/addProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/editContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_24"
+        android:text="@string/add_btn"
+        android:textSize="32sp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorAccent"
+        android:onClick="onItemAdd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
