@@ -1,6 +1,7 @@
-package com.dastan.scheapp4_0.ui.monday;
+package com.dastan.scheapp4_0.ui.tuesday;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,18 +28,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MondayActivity extends AppCompatActivity {
+public class TuesdayActivity extends AppCompatActivity {
 
-    private RecyclerView mondayRecyclerView;
-    private static MondayAdapter mondayAdapter;
-    private static List<Schedule> mondayList;
-    private FloatingActionButton mondayFab;
+    private RecyclerView tuesdayRecyclerView;
+    private static TuesdayAdapter tuesdayAdapter;
+    private static List<Schedule> tuesdayList;
+    private FloatingActionButton tuesdayFab;
     private int mondayRVPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monday);
+        setContentView(R.layout.activity_tuesday);
 
         initViews();
         initList();
@@ -46,28 +47,28 @@ public class MondayActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        mondayRecyclerView = findViewById(R.id.rvMonday);
-        mondayFab = findViewById(R.id.fabMonday);
+        tuesdayRecyclerView = findViewById(R.id.rvTuesday);
+        tuesdayFab = findViewById(R.id.fabTuesday);
     }
 
     private void initListeners(){
-        mondayFab.setOnClickListener(new View.OnClickListener() {
+        tuesdayFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MondayActivity.this, AddScheduleActivity.class);
-                startActivityForResult(intent, 200);
+                Intent intent = new Intent(TuesdayActivity.this, AddScheduleActivity.class);
+                startActivityForResult(intent, 202);
             }
         });
     }
 
     private void initList() {
-        mondayList = new ArrayList<>();
-        mondayRecyclerView.setLayoutManager(new LinearLayoutManager(MondayActivity.this));
-        mondayRecyclerView.addItemDecoration(new DividerItemDecoration(MondayActivity.this,
+        tuesdayList = new ArrayList<>();
+        tuesdayRecyclerView.setLayoutManager(new LinearLayoutManager(TuesdayActivity.this));
+        tuesdayRecyclerView.addItemDecoration(new DividerItemDecoration(TuesdayActivity.this,
                 DividerItemDecoration.VERTICAL));
-        mondayAdapter = new MondayAdapter(mondayList);
-        mondayRecyclerView.setAdapter(mondayAdapter);
-        mondayAdapter.setOnItemClickListeners(new OnItemClickListeners() {
+        tuesdayAdapter = new TuesdayAdapter(tuesdayList);
+        tuesdayRecyclerView.setAdapter(tuesdayAdapter);
+        tuesdayAdapter.setOnItemClickListeners(new OnItemClickListeners() {
             @Override
             public void onClick(int position) {
 
@@ -76,15 +77,15 @@ public class MondayActivity extends AppCompatActivity {
             @Override
             public void onLongClick(final int position) {
                 //Toast.makeText(getContext(), "long click pos = " + position, Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MondayActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(TuesdayActivity.this);
                 builder.setTitle("Are you sure to delete?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        App.getDatabase().scheduleDao().delete(mondayList.get(position));
+                        App.getDatabase().scheduleDao().delete(tuesdayList.get(position));
                         FirebaseFirestore.getInstance()
-                                .collection("monday")
-                                .document(mondayList.get(position).getId())
+                                .collection("tuesday")
+                                .document(tuesdayList.get(position).getId())
                                 .delete()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -101,8 +102,8 @@ public class MondayActivity extends AppCompatActivity {
                 builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(MondayActivity.this, AddScheduleActivity.class);
-                        intent.putExtra("mondaySchedule", mondayList.get(position));
+                        Intent intent = new Intent(TuesdayActivity.this, AddScheduleActivity.class);
+                        intent.putExtra("mondaySchedule", tuesdayList.get(position));
                         startActivity(intent);
                         mondayRVPosition = position;
                     }
@@ -120,12 +121,21 @@ public class MondayActivity extends AppCompatActivity {
         App.getDatabase().scheduleDao().getAll().observe(this, new Observer<List<Schedule>>() {
             @Override
             public void onChanged(List<Schedule> schedules) {
-                mondayList.clear();
-                mondayList.addAll(schedules);
-                mondayAdapter.notifyDataSetChanged();
+                tuesdayList.clear();
+                tuesdayList.addAll(schedules);
+                tuesdayAdapter.notifyDataSetChanged();
             }
         });
 
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK && requestCode == 202){
+//            Schedule schedule = (Schedule) data.getSerializableExtra("tuesdaySchedule");
+//            tuesdayList.add(schedule);
+//            tuesdayAdapter.notifyDataSetChanged();
+//        }
+//    }
 }

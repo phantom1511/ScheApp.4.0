@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navMonday"
-        android:name="com.dastan.scheapp4_0.ui.monday.MondayFragment"
+        android:name="com.dastan.scheapp4_0.ui.monday.group.GroupMondayFragment"
         android:label="@string/menuMonday"
-        tools:layout="@layout/fragment_monday">
+        tools:layout="@layout/fragment_group">
 
 <!--        <action-->
 <!--            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"-->
@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/navTuesday"
-        android:name="com.dastan.scheapp4_0.ui.tuesday.TuesdayFragment"
+        android:name="com.dastan.scheapp4_0.ui.tuesday.group.GroupTuesdayFragment"
         android:label="@string/menuTuesday"
-        tools:layout="@layout/fragment_tuesday" />
+        tools:layout="@layout/fragment_group_tuesday" />
 
     <fragment
         android:id="@+id/navWednesday"
