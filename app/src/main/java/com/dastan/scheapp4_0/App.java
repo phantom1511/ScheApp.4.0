@@ -6,7 +6,7 @@ import android.content.Context;
 import androidx.multidex.MultiDex;
 import androidx.room.Room;
 
-import com.dastan.scheapp4_0.room.AppDatabase;
+import com.dastan.scheapp4_0.data.room.AppDatabase;
 
 public class App extends Application {
     public static App instance;
@@ -18,6 +18,7 @@ public class App extends Application {
         instance = this;
         database = Room.databaseBuilder(this, AppDatabase.class, "database")
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
     }
 

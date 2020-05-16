@@ -16,11 +16,11 @@ import java.util.List;
 
 public class TuesdayAdapter extends RecyclerView.Adapter<TuesdayAdapter.TuesdayViewHolder> {
 
-    private List<Schedule> mondayList;
+    private List<Schedule> tuesdayList;
     private OnItemClickListeners onItemClickListeners;
 
-    public TuesdayAdapter(List<Schedule> mondayList) {
-        this.mondayList = mondayList;
+    public TuesdayAdapter(List<Schedule> tuesdayList) {
+        this.tuesdayList = tuesdayList;
     }
 
     public void setOnItemClickListeners(OnItemClickListeners onItemClickListeners) {
@@ -37,12 +37,12 @@ public class TuesdayAdapter extends RecyclerView.Adapter<TuesdayAdapter.TuesdayV
 
     @Override
     public void onBindViewHolder(@NonNull TuesdayViewHolder holder, int position) {
-        holder.bind(mondayList.get(position));
+        holder.bind(tuesdayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mondayList.size();
+        return tuesdayList.size();
     }
 
 

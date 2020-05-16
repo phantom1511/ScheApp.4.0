@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:padding="@dimen/padding_16"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".main.ProfileActivity">
     
@@ -15,14 +16,17 @@
         android:layout_height="200dp"
         android:src="@mipmap/ic_launcher_round"
         android:layout_centerHorizontal="true"/>
-    
-    <ProgressBar
+
+    <com.hamza.slidingsquaresloaderview.SlidingSquareLoaderView
         android:id="@+id/imgProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        app:sslv_start="true"
+        app:sslv_gap="2dp"
+        app:sslv_square_length="20dp"
+        app:sslv_color="@color/colorAccent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"/>
+        android:layout_marginTop="70dp"/>
     
     <EditText
         android:id="@+id/etName"
@@ -31,6 +35,17 @@
         android:layout_marginTop="@dimen/padding_16"
         android:hint="@string/default_name"
         android:layout_below="@id/imgProfile"/>
+
+    <com.hamza.slidingsquaresloaderview.SlidingSquareLoaderView
+        android:id="@+id/profileProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:sslv_start="true"
+        app:sslv_gap="2dp"
+        app:sslv_square_length="20dp"
+        app:sslv_color="@color/colorAccent"
+        android:layout_below="@+id/etName"
+        android:layout_centerInParent="true"/>
 
 
     <EditText
@@ -41,6 +56,15 @@
         android:hint="@string/default_group"
         android:layout_below="@id/etName"/>
 
+    <Spinner
+        android:id="@+id/spGroup"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16sp"
+        android:background="@drawable/spinner_icon"
+        style="@style/styleSpinner"
+        android:layout_below="@id/etGroup"/>
+
     <Button
         android:id="@+id/btnLogIn"
         android:layout_width="match_parent"
@@ -48,8 +72,8 @@
         android:layout_marginTop="@dimen/padding_16"
         android:text="@string/log_in"
         android:onClick="onLogIn"
-        android:background="@color/colorAccent"
+        android:background="@drawable/btn_background"
         android:textColor="@color/colorWhite"
-        android:layout_below="@id/etGroup"/>
+        android:layout_below="@id/spGroup"/>
 
 </RelativeLayout>

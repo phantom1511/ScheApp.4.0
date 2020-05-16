@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavInflater;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dastan.scheapp4_0.App;
 import com.dastan.scheapp4_0.Group;
 import com.dastan.scheapp4_0.R;
+import com.dastan.scheapp4_0.add.AddGroupActivity;
 import com.dastan.scheapp4_0.interfaces.OnItemClickListeners;
-import com.dastan.scheapp4_0.ui.tuesday.TuesdayActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,7 +55,7 @@ public class GroupTuesdayFragment extends Fragment {
 
     private void initViews(View view) {
         groupRecyclerView = view.findViewById(R.id.rvGroup);
-        //groupTuesdayFab = view.findViewById(R.id.fabTuesdayGroup);
+        //groupTuesdayFab = view.findViewById(R.id.fabTue);
 
     }
 
@@ -59,7 +63,7 @@ public class GroupTuesdayFragment extends Fragment {
 //        groupTuesdayFab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), AddTuesdayGroupActivity.class);
+//                Intent intent = new Intent(getContext(), AddGroupActivity.class);
 //                startActivity(intent);
 //            }
 //        });
@@ -75,9 +79,23 @@ public class GroupTuesdayFragment extends Fragment {
         groupAdapter.setOnItemClickListeners(new OnItemClickListeners() {
             @Override
             public void onClick(int position) {
-                Intent intent = new Intent(getContext(), TuesdayActivity.class);
-                intent.putExtra("groupSchedule", groupList.get(position));
-                startActivity(intent);
+                NavHostFragment navHost = (NavHostFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment);
+                NavController navController = navHost.getNavController();
+
+                NavInflater navInflater = navController.getNavInflater();
+                NavGraph graph = navInflater.inflate(R.navigation.mobile_navigation);
+                graph.setStartDestination(R.id.navTuesdayDay);
+                navController.setGraph(graph);
+//                TuesdayFragment tuesdayFragment = new TuesdayFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.nav_host_fragment, tuesdayFragment)
+//                        .addToBackStack(null)
+//                        .commit();
+//                Intent intent = new Intent(getContext(), TuesdayActivity.class);
+//                intent.putExtra("tuesdaySchedule", groupList.get(position).getGroupName());
+//                startActivity(intent);
                 groupRVPosition = position;
             }
 

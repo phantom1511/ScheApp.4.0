@@ -10,24 +10,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dastan.scheapp4_0.R;
 import com.dastan.scheapp4_0.Schedule;
-
-import org.w3c.dom.Text;
+import com.dastan.scheapp4_0.interfaces.OnItemClickListeners;
 
 import java.util.List;
 
 public class WednesdayAdapter extends RecyclerView.Adapter<WednesdayAdapter.WednesdayViewHolder> {
 
     private List<Schedule> wednesdayList;
+    private OnItemClickListeners onItemClickListeners;
 
     public WednesdayAdapter(List<Schedule> wednesdayList) {
         this.wednesdayList = wednesdayList;
+    }
+
+    public void setOnItemClickListeners(OnItemClickListeners onItemClickListeners) {
+        this.onItemClickListeners = onItemClickListeners;
     }
 
     @NonNull
     @Override
     public WednesdayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_wednesday, parent, false);
+                .inflate(R.layout.list_monday, parent, false);
         return new WednesdayViewHolder(view);
     }
 
@@ -41,7 +45,8 @@ public class WednesdayAdapter extends RecyclerView.Adapter<WednesdayAdapter.Wedn
         return wednesdayList.size();
     }
 
-    public class WednesdayViewHolder extends RecyclerView.ViewHolder{
+
+    public class WednesdayViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textTime;
         private TextView textLesson;
@@ -51,13 +56,74 @@ public class WednesdayAdapter extends RecyclerView.Adapter<WednesdayAdapter.Wedn
         public WednesdayViewHolder(@NonNull View itemView) {
             super(itemView);
             initViews(itemView);
+            initListeners();
         }
 
-        private void initViews(View view){
-            textTime = view.findViewById(R.id.tvTimeWed);
-            textLesson = view.findViewById(R.id.tvLessonWed);
-            textType = view.findViewById(R.id.tvTypeWed);
-            textRoom = view.findViewById(R.id.tvRoomWed);
+        private void initViews(View view) {
+            textTime = view.findViewById(R.id.tvTimeMon);
+            textLesson = view.findViewById(R.id.tvLessonMon);
+            textType = view.findViewById(R.id.tvTypeMon);
+            textRoom = view.findViewById(R.id.tvRoomMon);
+        }
+
+        private void initListeners() {
+            textTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+
+            textLesson.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+            textType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+            textRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+
+            textTime.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textLesson.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textType.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textRoom.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
         }
 
         public void bind(Schedule schedule) {

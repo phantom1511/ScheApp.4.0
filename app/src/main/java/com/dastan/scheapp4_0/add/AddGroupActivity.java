@@ -60,7 +60,7 @@ public class AddGroupActivity extends AppCompatActivity {
 
     private void saveToFirestore() {
         FirebaseFirestore.getInstance()
-                .collection("groupMonday")
+                .collection("group")
                 .add(mGroup)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -72,7 +72,8 @@ public class AddGroupActivity extends AppCompatActivity {
                             addProgress.setVisibility(View.INVISIBLE);
                             finish();
                         } else {
-                            Toast.makeText(App.instance.getBaseContext(), "Error " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(App.instance.getBaseContext(), "Error " + task.getException()
+                                    .getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -80,7 +81,7 @@ public class AddGroupActivity extends AppCompatActivity {
 
     private void updateInFirestore() {
         FirebaseFirestore.getInstance()
-                .collection("groupMonday")
+                .collection("group")
                 .document(mGroup.getId())
                 .set(mGroup)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

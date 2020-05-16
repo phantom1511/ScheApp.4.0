@@ -10,36 +10,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dastan.scheapp4_0.R;
 import com.dastan.scheapp4_0.Schedule;
+import com.dastan.scheapp4_0.interfaces.OnItemClickListeners;
 
 import java.util.List;
 
 public class FridayAdapter extends RecyclerView.Adapter<FridayAdapter.FridayViewHolder> {
 
-    private List<Schedule> fridayList;
+    private List<Schedule> mondayList;
+    private OnItemClickListeners onItemClickListeners;
 
-    public FridayAdapter(List<Schedule> fridayList) {
-        this.fridayList = fridayList;
+    public FridayAdapter(List<Schedule> mondayList) {
+        this.mondayList = mondayList;
+    }
+
+    public void setOnItemClickListeners(OnItemClickListeners onItemClickListeners) {
+        this.onItemClickListeners = onItemClickListeners;
     }
 
     @NonNull
     @Override
     public FridayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_friday, parent, false);
+                .inflate(R.layout.list_monday, parent, false);
         return new FridayViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FridayViewHolder holder, int position) {
-        holder.bind(fridayList.get(position));
+        holder.bind(mondayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return fridayList.size();
+        return mondayList.size();
     }
 
-    public class FridayViewHolder extends RecyclerView.ViewHolder{
+
+    public class FridayViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textTime;
         private TextView textLesson;
@@ -49,13 +56,74 @@ public class FridayAdapter extends RecyclerView.Adapter<FridayAdapter.FridayView
         public FridayViewHolder(@NonNull View itemView) {
             super(itemView);
             initViews(itemView);
+            initListeners();
         }
 
         private void initViews(View view) {
-            textTime = view.findViewById(R.id.tvTimeFri);
-            textLesson = view.findViewById(R.id.tvLessonFri);
-            textType = view.findViewById(R.id.tvTypeFri);
-            textRoom = view.findViewById(R.id.tvRoomFri);
+            textTime = view.findViewById(R.id.tvTimeMon);
+            textLesson = view.findViewById(R.id.tvLessonMon);
+            textType = view.findViewById(R.id.tvTypeMon);
+            textRoom = view.findViewById(R.id.tvRoomMon);
+        }
+
+        private void initListeners() {
+            textTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+
+            textLesson.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+            textType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+            textRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListeners.onClick(getAdapterPosition());
+                }
+            });
+
+            textTime.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textLesson.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textType.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
+
+            textRoom.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListeners.onLongClick(getAdapterPosition());
+                    return true;
+                }
+            });
         }
 
         public void bind(Schedule schedule) {

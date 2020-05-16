@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hamza.slidingsquaresloaderview.SlidingSquareLoaderView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,14 +32,15 @@ public class PhoneActivity extends AppCompatActivity {
     private Button btnConfirm;
     private String codeSend;
     private boolean isCodeSent;
-    private ProgressBar phoneProgress;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
+    private SlidingSquareLoaderView phoneProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone);
         initViews();
+        phoneProgress.setVisibility(View.INVISIBLE);
         initListeners();
     }
 
@@ -61,6 +63,8 @@ public class PhoneActivity extends AppCompatActivity {
 
                 if (isCodeSent) {
                     phoneAuthCredential.getSmsCode();
+                    phoneProgress.stop();
+                    phoneProgress.setVisibility(View.INVISIBLE);
                 } else {
                     signIn(phoneAuthCredential);
                 }
@@ -99,6 +103,7 @@ public class PhoneActivity extends AppCompatActivity {
     }
 
     public void onCodeSend(View view) {
+        phoneProgress.start();
         phoneProgress.setVisibility(View.VISIBLE);
         String phone = editPhone.getText().toString().trim();
         if (phone.isEmpty()) {
@@ -121,7 +126,6 @@ public class PhoneActivity extends AppCompatActivity {
     }
 
     public void onConfirm(View view) {
-        phoneProgress.setVisibility(View.INVISIBLE);
         String code = editCode.getText().toString().trim();
         if (code.isEmpty()) {
             editCode.setError("Please input sms code");

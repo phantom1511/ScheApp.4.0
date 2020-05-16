@@ -1,6 +1,12 @@
 package com.dastan.scheapp4_0.add;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -9,10 +15,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.dastan.scheapp4_0.App;
 import com.dastan.scheapp4_0.R;
 import com.dastan.scheapp4_0.Schedule;
+import com.dastan.scheapp4_0.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,14 +33,23 @@ public class AddScheduleActivity extends AppCompatActivity {
     private EditText editLesson;
     private EditText editType;
     private EditText editRoom;
+    private String groupName;
+    private String days;
+    private int scheduleId;
     private Schedule mSchedule;
     private ProgressBar addProgress;
+    private NotificationHelper mNotificationHelper;
+    private NotificationManagerCompat notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        groupName = getIntent().getStringExtra("groupName");
+        days = getIntent().getStringExtra("days");
+
+        notificationManager = NotificationManagerCompat.from(this);
         initViews();
     }
 
@@ -50,18 +68,11 @@ public class AddScheduleActivity extends AppCompatActivity {
             editRoom.setText(mSchedule.getRoom(), TextView.BufferType.EDITABLE);
         }
 
-        mSchedule = (Schedule) getIntent().getSerializableExtra("tuesdaySchedule");
-        if (mSchedule != null) {
-            editTime.setText(mSchedule.getTime(), TextView.BufferType.EDITABLE);
-            editLesson.setText(mSchedule.getLesson(), TextView.BufferType.EDITABLE);
-            editType.setText(mSchedule.getType(), TextView.BufferType.EDITABLE);
-            editRoom.setText(mSchedule.getRoom(), TextView.BufferType.EDITABLE);
-        }
+        mNotificationHelper = new NotificationHelper(this);
     }
 
 
     public void onItemAdd(View view) {
-        addProgress.setVisibility(View.VISIBLE);
         String time = editTime.getText().toString().trim();
         String lesson = editLesson.getText().toString().trim();
         String type = editType.getText().toString().trim();
@@ -74,15 +85,19 @@ public class AddScheduleActivity extends AppCompatActivity {
             mSchedule.setRoom(room);
             updateInFirestore();
         } else {
-            mSchedule = new Schedule(time, lesson, type, room);
+            mSchedule = new Schedule(time, lesson, type, room, groupName, days);
             saveToFirestore();
         }
         finish();
+        addProgress.setVisibility(View.VISIBLE);
+        startNotification("Schedule has been changed",
+                mSchedule.getTime() + "\n" + mSchedule.getLesson() + "\n" +
+                        mSchedule.getType() + "\n" + mSchedule.getRoom());
     }
 
     private void saveToFirestore() {
         FirebaseFirestore.getInstance()
-                .collection("monday")
+                .collection("days")
                 .add(mSchedule)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -102,7 +117,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     private void updateInFirestore() {
         FirebaseFirestore.getInstance()
-                .collection("monday")
+                .collection("days")
                 .document(mSchedule.getId())
                 .set(mSchedule)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -118,5 +133,10 @@ public class AddScheduleActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void startNotification(String title, String message) {
+        Notification nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify(1, nb);
     }
 }

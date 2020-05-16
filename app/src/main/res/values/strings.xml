@@ -20,7 +20,7 @@
     <string name="default_room_text">Room</string>
     <string name="add_btn">Add</string>
 
-    <string name="default_time_hint">12:00</string>
+    <string name="default_time_hint">08:00</string>
     <string name="default_lesson_teacher_hint">Informatics, Dastan Tulokulov</string>
     <string name="default_type_hint">prac</string>
     <string name="default_room_hint">502</string>
@@ -33,4 +33,21 @@
     <string name="default_group">AIN-1-16</string>
     <string name="log_in">Log In</string>
     <string name="defaultGroup">AIN-1-16</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcomeText">Welcome to ScheApp! Please input your phone number to get verification code to authorization</string>
+    <string name="groupText">Please input group name with capital letters like in hint below</string>
+    <string name="listGroup">List of groups</string>
+    <string name="profile">Profile</string>
+    <string name="menuAbout">About us</string>
+
+    <string-array name="group_list">
+        <item>AIN-1-19</item>
+        <item>AIN-1-18</item>
+        <item>AIN-1-17</item>
+        <item>AIN-2-17</item>
+        <item>AIN-1-16</item>
+        <item>MIN-1-16</item>
+    </string-array>
 </resources>

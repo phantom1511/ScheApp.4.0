@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:visible="true"
+        android:id="@+id/navGroup">
         <item
             android:id="@+id/navMonday"
             android:icon="@drawable/ic_today"
@@ -29,4 +31,45 @@
             android:icon="@drawable/ic_today"
             android:title="@string/menuSaturday" />
     </group>
+    <group android:checkableBehavior="single"
+        android:visible="true"
+        android:id="@+id/navDays">
+        <item
+            android:id="@+id/navMondayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuMonday" />
+        <item
+            android:id="@+id/navTuesdayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuTuesday" />
+        <item
+            android:id="@+id/navWednesdayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuWednesday" />
+        <item
+            android:id="@+id/navThursdayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuThursday" />
+        <item
+            android:id="@+id/navFridayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuFriday" />
+        <item
+            android:id="@+id/navSaturdayUser"
+            android:icon="@drawable/ic_today"
+            android:title="@string/menuSaturday" />
+    </group>
+
+    <item android:title="User settings">
+        <menu>
+            <item
+                android:id="@+id/navProfile"
+                android:icon="@drawable/ic_account"
+                android:title="@string/profile" />
+            <item
+                android:id="@+id/navAbout"
+                android:icon="@drawable/ic_about"
+                android:title="@string/menuAbout"/>
+        </menu>
+    </item>
 </menu>

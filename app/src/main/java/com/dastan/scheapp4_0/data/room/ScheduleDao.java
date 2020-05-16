@@ -1,4 +1,4 @@
-package com.dastan.scheapp4_0.room;
+package com.dastan.scheapp4_0.data.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

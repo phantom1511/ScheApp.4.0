@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,18 +21,30 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.dastan.scheapp4_0.App;
+import com.dastan.scheapp4_0.Group;
 import com.dastan.scheapp4_0.R;
+import com.dastan.scheapp4_0.Schedule;
+import com.dastan.scheapp4_0.ui.monday.group.GroupMondayAdapter;
+import com.dastan.scheapp4_0.ui.monday.group.GroupMondayFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hamza.slidingsquaresloaderview.SlidingSquareLoaderView;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -38,6 +53,11 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView imageProfile, imgProfileHeader;
     private final int Pick_image = 1;
     private SharedPreferences sharedPreferences;
+    private SlidingSquareLoaderView imgProgress;
+    private SlidingSquareLoaderView profileProgress;
+    private Spinner groupSpinner;
+    private List<Group> groupList;
+    private ArrayAdapter<Group> adapter;
 
     @Override
 
@@ -46,8 +66,32 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         initViews();
+        imgProgress.start();
+        profileProgress.start();
         initListeners();
         loadData();
+        setSpinner();
+        loadGroupName();
+
+    }
+
+    private void setSpinner() {
+        adapter = new ArrayAdapter<Group>(this, android.R.layout.simple_spinner_item, groupList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        groupSpinner.setAdapter(adapter);
+        groupSpinner.setPrompt("Groups");
+        groupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getBaseContext(), "pos " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void loadData() {
@@ -64,6 +108,8 @@ public class ProfileActivity extends AppCompatActivity {
                             String group = task.getResult().getString("group");
                             editName.setText(name);
                             editGroup.setText(group);
+                            profileProgress.stop();
+                            profileProgress.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
@@ -76,6 +122,8 @@ public class ProfileActivity extends AppCompatActivity {
                         .load(uri)
                         .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                         .into(imageProfile);
+                imgProgress.stop();
+                imgProgress.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -85,7 +133,9 @@ public class ProfileActivity extends AppCompatActivity {
         editGroup = findViewById(R.id.etGroup);
         imageProfile = findViewById(R.id.imgProfile);
         imgProfileHeader = findViewById(R.id.imgProfileHeader);
-
+        imgProgress = findViewById(R.id.imgProgressBar);
+        profileProgress = findViewById(R.id.profileProgressBar);
+        groupSpinner = findViewById(R.id.spGroup);
     }
 
     private void initListeners() {
@@ -98,6 +148,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void onLogIn(View view) {
         String name = editName.getText().toString().trim();
@@ -155,8 +206,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void upload(Uri uri){
-        final ProgressBar progressBar = findViewById(R.id.imgProgressBar);
-        progressBar.setVisibility(View.VISIBLE);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String userId = FirebaseAuth.getInstance().getUid();
         StorageReference reference = storage.getReference().child("image/*" + userId);
@@ -166,9 +215,30 @@ public class ProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(App.instance.getBaseContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                    imgProgress.stop();
+                    imgProgress.setVisibility(View.INVISIBLE);
                 }
             }
         });
+    }
+
+    private void loadGroupName(){
+        FirebaseFirestore.getInstance()
+                .collection("group")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            groupList.clear();
+                            for (DocumentSnapshot document : task.getResult().getDocuments()){
+                                Group group = document.toObject(Group.class);
+                                groupList.add(group);
+                            }
+                            adapter = new ArrayAdapter<Group>(ProfileActivity.this, android.R.layout.simple_spinner_item, groupList);
+                            groupSpinner.setAdapter(adapter);
+                        }
+                    }
+                });
     }
 }
